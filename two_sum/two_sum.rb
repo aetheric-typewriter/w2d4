@@ -25,3 +25,17 @@ def sorting_two_sum(arr,target)
     end
     false
 end
+
+def hash_two_sum(arr, target)
+    hash = Hash.new(0)
+    arr.each do |el|
+        hash[el]+=1
+    end
+    return true if hash[target/2] == 2
+    hash.each_key do |k1|
+        hash.each_key do |k2|
+            return true if k1!=k2 && k1+k2 == target
+        end
+    end
+    false
+end
