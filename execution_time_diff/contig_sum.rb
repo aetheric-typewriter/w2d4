@@ -34,28 +34,55 @@ def largest_contiguous_sum(list)
 end
 
 def largest_contiguous_sum_2(list)
-    arr = []
-    largest = list.first
-    contig = true
+    arr = [list.first]
     i = 1
     while i < list.length
-        if contig == true
-            if list[i] + largest > largest
-                largest = list[i] + largest
-            end
+        if list[i] > list[i] + arr.last
+            arr << list[i]
         else
-            ccontig = true
-        end
-        if list[i] > largest
-            largest = list[i]
-            contig = false
+            arr << list[i] + arr.last
         end
         i+=1
-        p largest
     end
-    largest
+    p arr
+    arr.max
 
-
-    #I'll try psuedocode to keep the driver/navigator thing
     
+end
+
+def largest_contiguous_sum_3(list)
+    sums = Array.new(list.length, nil)
+
+    sums[0] = list[0]
+
+    for i in 1...(list.length)
+        sums[i] = [list[i], list[i] + sums[i - 1]].max
+    end
+    
+    p sums
+    sums.max
+end
+
+#First could you explain his suggestion regarding how to achieve constant space complexity?
+
+
+def largest_contiguous_sum_const_space(list)
+    largest_found = list.first
+    current_largest = list.first
+    
+    i = 1
+    while i < list.length
+        if list[i] > list[i] + current_largest
+            current_largest = list[i]
+        else
+            current_largest = list[i] + current_largest
+        end
+
+        if current_largest > largest_found
+            largest_found = current_largest
+        end
+
+        i+=1
+    end
+    largest_found
 end
